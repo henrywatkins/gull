@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "seal"
+dynamic = ["version"]
+description = 'Terminal based plotting with seaborn'
+readme = "README.md"
+requires-python = ">=3.9"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "Henry Watkins", email = "h.watkins@ucl.ac.uk" },
+]
+classifiers = [
+  "Programming Language :: Python",
+]
+dependencies = [
+  "click",
+  "seaborn",
+  "matplotlib",
+  "pandas",
+]
+
+[project.urls]
+
+[project.scripts]
+seal = "seal.cli:seal"
+
+[tool.hatch.version]
+path = "src/seal/__about__.py"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pytest",
+  "black",
+  "isort",
+]
+[tool.hatch.envs.default.scripts]
+test = "pytest {args:tests}"
+fmt = "black . ; isort ."
