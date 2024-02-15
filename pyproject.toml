@@ -40,3 +40,4 @@ dependencies = [
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
 fmt = "black . ; isort ."
+clean = 'find . | grep -E "(/__pycache__$|\.pyc$|\.pyo$)" | xargs rm -rf'
