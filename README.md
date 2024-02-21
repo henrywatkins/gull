@@ -1,11 +1,7 @@
 # seal
 
------
 
-**Table of Contents**
-
-- [Installation](#installation)
-- [License](#license)
+Terminal-based plotting with seaborn
 
 ## Installation
 
@@ -13,55 +9,29 @@
 pip install seal
 ```
 
-## License
+## Usage
 
-`seal` is distributed under the terms of the [MIT](https://spdx.org/licenses/MIT.html) license.
+Plot data from a tabular data file or from stdin, all from the terminal. An ideal companion for awk, grep and other terminal-based processing tools. Uses seaborn as a plotting interface, so for more information see the seaborn website (https://seaborn.pydata.org/)
 
+plot types: 
 
-## Design
-- stdin is main input method or use file
-- input comes from awk
-- output in the form of gui, file or interactive dash (possible with plotly?)
-- cli should follow awk/sed style
-- use relplot,displot,catplot,pairplot as basic types
-- f for file input for complicated processing
-- main parameters to seaborn plot - x, y, col ,hue, style, size, kind
+relplot (default), kinds: scatter, line
+catplot, kinds: strip (default), swarm, box, violin, boxen, point, bar, count 
+displot, kinds: hist (default), kde, ecdf 
+pairplot
 
-kinds of catplot
-Categorical scatterplots:
+Define the plotting parameters and columns to use with a string. 
 
-    stripplot() (with kind="strip"; the default)
+Example: to plot a scatterplot of data with column names col1, col2, and coloured by the value in col3.
 
-    swarmplot() (with kind="swarm")
+`seal data.csv -p "plot:relplot,kind:scatter,x:col1,y:col2,hue:col3~col1,col2,col3"`
 
-Categorical distribution plots:
+If no column names are specified in the parameter string, the first line of the input will be taken as the column names. 
 
-    boxplot() (with kind="box")
+Usage alongside awk: seal is ideal of using alongside `awk` for basic data processing. e.g. 
 
-    violinplot() (with kind="violin")
+```
+awk 'NF<10 {print $0,$1 }' /tmp/userdata.txt | seal -p "plot:replot,kind:scatter,x:pos_x,y:pos_y~pos_x,pos_y"
+```
 
-    boxenplot() (with kind="boxen")
-
-Categorical estimate plots:
-
-    pointplot() (with kind="point")
-
-    barplot() (with kind="bar")
-
-    countplot() (with kind="count")
-
-displot types
-
-    histplot() (with kind="hist"; the default)
-
-    kdeplot() (with kind="kde")
-
-    ecdfplot() (with kind="ecdf"; univariate-only)
-
-relplot types
-
-
-
-    scatterplot() (with kind="scatter"; the default)
-
-    lineplot() (with kind="line")
+Here, we print the first 10 lines of the first two columns, with a ',' as a separator. Then we pass the result to seal to create a scatter plot with the columns names 'pos_x' and 'pos_y'
