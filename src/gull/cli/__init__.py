@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
-from seal.__about__ import __version__
+from gull.__about__ import __version__
 
 sns.set_style("whitegrid")
 
@@ -14,7 +14,7 @@ sns.set_style("whitegrid")
 @click.command(
     context_settings={"help_option_names": ["-h", "--help"]}
 )  # , invoke_without_command=True)
-@click.version_option(version=__version__, prog_name="seal")
+@click.version_option(version=__version__, prog_name="gull")
 @click.argument("input_file", type=click.File("r"), default="-")
 @click.option(
     "--program",
@@ -39,7 +39,7 @@ sns.set_style("whitegrid")
     default=",",
     help="Separator for input data, default is ',' ",
 )
-def seal(program, input_file, output, file, separator):
+def gull(program, input_file, output, file, separator):
     """Terminal-based plotting with seaborn
 
     Plot data from a tabular data file or from stdin, all from the terminal. An ideal companion for awk, grep and other terminal-based processing tools. Uses seaborn as a plotting interface, so for more information see the seaborn website (https://seaborn.pydata.org/)
@@ -58,7 +58,7 @@ def seal(program, input_file, output, file, separator):
 
     Example: to plot a scatterplot of data with column names col1, col2, and coloured by the value in col3.
 
-    seal data.csv -p "plot:relplot,kind:scatter,x:col1,y:col2,hue:col3~col1,col2,col3"
+    gull data.csv -p "plot:relplot,kind:scatter,x:col1,y:col2,hue:col3~col1,col2,col3"
     """
     if file:
         program = file.read()

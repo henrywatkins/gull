@@ -1,4 +1,4 @@
-# seal
+# gull
 
 
 Terminal-based plotting with seaborn
@@ -6,7 +6,7 @@ Terminal-based plotting with seaborn
 ## Installation
 
 ```console
-pip install seal
+pip install gull
 ```
 
 ## Usage
@@ -24,14 +24,14 @@ Define the plotting parameters and columns to use with a string.
 
 Example: to plot a scatterplot of data with column names col1, col2, and coloured by the value in col3.
 
-`seal data.csv -p "plot:relplot,kind:scatter,x:col1,y:col2,hue:col3~col1,col2,col3"`
+`gull data.csv -p "plot:relplot,kind:scatter,x:col1,y:col2,hue:col3~col1,col2,col3"`
 
 If no column names are specified in the parameter string, the first line of the input will be taken as the column names. 
 
-Usage alongside awk: seal is ideal of using alongside `awk` for basic data processing. e.g. 
+Usage alongside awk: gull is ideal of using alongside `awk` for basic data processing. e.g. 
 
 ```
-awk 'NF<10 {print $0,$1 }' /tmp/userdata.txt | seal -p "plot:replot,kind:scatter,x:pos_x,y:pos_y~pos_x,pos_y"
+awk 'NF<10 {print $0,$1 }' /tmp/userdata.txt | gull -p "plot:replot,kind:scatter,x:pos_x,y:pos_y~pos_x,pos_y"
 ```
 
-Here, we print the first 10 lines of the first two columns, with a ',' as a separator. Then we pass the result to seal to create a scatter plot with the columns names 'pos_x' and 'pos_y'
+Here, we print the first 10 lines of the first two columns, with a ',' as a separator. Then we pass the result to gull to create a scatter plot with the columns names 'pos_x' and 'pos_y'
