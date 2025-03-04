@@ -1,1 +1,10 @@
 iris.data
+CLAUDE.md
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+.ruff_cache/
+.vscode/
+.python-version

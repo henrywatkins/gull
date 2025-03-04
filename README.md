@@ -1,37 +1,72 @@
-# gull
+# GullPlot
 
-
-Terminal-based plotting with seaborn
+Terminal-based plotting with seaborn. 
 
 ## Installation
 
-```console
-pip install gull
+```
+pip install gullplot
 ```
 
 ## Usage
 
-Plot data from a tabular data file or from stdin, all from the terminal. An ideal companion for awk, grep and other terminal-based processing tools. Uses seaborn as a plotting interface, so for more information see the seaborn website (https://seaborn.pydata.org/)
+GullPlot allows you to create plots from tabular data directly in the terminal. It's an ideal companion for command-line data processing tools like awk and grep.
 
-plot types: 
+### Basic Usage
 
-relplot (default), kinds: scatter, line
-catplot, kinds: strip (default), swarm, box, violin, boxen, point, bar, count 
-displot, kinds: hist (default), kde, ecdf 
-pairplot
+```bash
+# Plot from a CSV file
+gullplot data.csv -p "plot:relplot,kind:scatter,x:col1,y:col2,hue:col3"
 
-Define the plotting parameters and columns to use with a string. 
+# Plot from stdin (pipe data)
+cat data.csv | gullplot - -p "plot:relplot,kind:scatter,x:col1,y:col2"
 
-Example: to plot a scatterplot of data with column names col1, col2, and coloured by the value in col3.
+# Save plot to a file
+gullplot data.csv -p "plot:relplot,kind:scatter,x:col1,y:col2" -o plot.png
 
-`gull data.csv -p "plot:relplot,kind:scatter,x:col1,y:col2,hue:col3" -c "col1,col2,col3"`
+# Specify column names if they're not in the first row
+gullplot data.csv -p "plot:relplot,kind:scatter,x:col1,y:col2" -c "col1,col2,col3"
 
-If no column names are specified in the --columns option, the first line of the input will be taken as the column names. 
-
-Usage alongside awk: gull is ideal of using alongside `awk` for basic data processing. e.g. 
-
-```
-awk 'NF<10 {print $0,$1 }' /tmp/userdata.txt | gull -p "plot:replot,kind:scatter,x:pos_x,y:pos_y" -c "pos_x,pos_y"
+# Use a different separator for CSV data
+gullplot data.tsv -p "plot:relplot,kind:scatter,x:col1,y:col2" -s "\t"
 ```
 
-Here, we print the first 10 lines of the first two columns, with a ',' as a separator. Then we pass the result to gull to create a scatter plot with the columns names 'pos_x' and 'pos_y'
+### Supported Plot Types
+
+- **relplot** (default): Scatter and line plots
+  - kinds: scatter, line
+- **catplot**: Categorical plots
+  - kinds: strip (default), swarm, box, violin, boxen, point, bar, count
+- **displot**: Distribution plots
+  - kinds: hist (default), kde, ecdf
+- **pairplot**: Pairwise relationships in dataset
+
+### Script Format
+
+The plotting script uses a simple key:value format:
+
+```
+plot:plot_type,kind:plot_kind,x:x_column,y:y_column,hue:color_column,...
+```
+
+For example:
+```
+plot:catplot,kind:violin,x:category,y:value,hue:group
+```
+
+## Development
+
+```bash
+# Install development dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Format code
+hatch run fmt
+```
+
+## License
+
+MIT
